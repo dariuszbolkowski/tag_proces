@@ -6,8 +6,8 @@
 Table of Contents 
 ==========
 
-* [Prerequisites](# Prerequisites)
-  * [K8S platform -Rancher](## K8S platform -Rancher)
+* [Prerequisites](#Prerequisites)
+  * [K8S platform -Rancher](##K8S platform -Rancher)
 
 # Prerequisites
 ----------------------
