@@ -1,6 +1,6 @@
 # USER GUIDE FOR EZDRP LINUXPOLSKA 
 
-#Table of Contents 
+# Table of Contents 
 * [USER GUIDE FOR EZDRP LINUXPOLSKA](#user-guide-for-ezdrp-linuxpolska)
 * [Table of Contents](#table-of-contents)
 * [Prerequisites](#prerequisites)
