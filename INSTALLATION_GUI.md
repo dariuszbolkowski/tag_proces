@@ -1,19 +1,22 @@
 # USER GUIDE FOR EZDRP LINUXPOLSKA 
 
-
-
-
-Table of Contents 
-==========
-
-* [Prerequisites](#Prerequisites)
-  * [K8S platform -Rancher](#K8S platform -Rancher)
+#Table of Contents 
+* [USER GUIDE FOR EZDRP LINUXPOLSKA](#user-guide-for-ezdrp-linuxpolska)
+* [Table of Contents](#table-of-contents)
+* [Prerequisites](#prerequisites)
+   * [K8S platform -Rancher](#k8s-platform--rancher)
+   * [Create project in rancher.](#create-project-in-rancher)
+   * [Create work space in rancher.](#create-work-space-in-rancher)
+   * [Adding repository with charts to Rancher](#adding-repository-with-charts-to-rancher)
+* [Installation applications](#installation-applications)
+   * [EZDRP BACKEND-CRD](#ezdrp-backend-crd)
+   * [EZDRP BACKEND-DB](#ezdrp-backend-db)
+   * [EZD FRONTEND](#ezd-frontend)
 
 # Prerequisites
-=====
 
 ## K8S platform -Rancher
------
+
 
 1. Login to Rancher 
 
