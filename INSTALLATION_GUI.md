@@ -10,9 +10,10 @@ Table of Contents
   * [K8S platform -Rancher](#K8S platform -Rancher)
 
 # Prerequisites
-----------------------
+=====
 
 ## K8S platform -Rancher
+-----
 
 1. Login to Rancher 
 
