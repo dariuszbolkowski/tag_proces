@@ -1,0 +1,113 @@
+Analyzing hub.eadministracja.nask.pl/ezdrp/forms-web:19.7.41
+Docker Version: 19.03.6
+GraphDriver: overlay2
+Environment Variables
+|PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+|TZ=Europe/Warsaw
+|USER=appuser
+|UID=501
+|GID=501
+|PORT=5000
+|ENTDIR=/usr/share/nginx/html
+|ENTPROJ=EZD
+
+Open Ports
+|8080
+
+Image user
+|User is root
+
+Potential secrets:
+|Found match etc/apk/keys/alpine-devel@lists.alpinelinux.org-4a6a0840.rsa.pub Possible public key \.pub$ 4ec6bb168aecd97341754c95b622cba43c45d7f4b9053f749f5c4f6cbf422092/layer.tar
+|Found match etc/apk/keys/alpine-devel@lists.alpinelinux.org-5243ef4b.rsa.pub Possible public key \.pub$ 4ec6bb168aecd97341754c95b622cba43c45d7f4b9053f749f5c4f6cbf422092/layer.tar
+|Found match etc/apk/keys/alpine-devel@lists.alpinelinux.org-5261cecb.rsa.pub Possible public key \.pub$ 4ec6bb168aecd97341754c95b622cba43c45d7f4b9053f749f5c4f6cbf422092/layer.tar
+|Found match etc/apk/keys/alpine-devel@lists.alpinelinux.org-6165ee59.rsa.pub Possible public key \.pub$ 4ec6bb168aecd97341754c95b622cba43c45d7f4b9053f749f5c4f6cbf422092/layer.tar
+|Found match etc/apk/keys/alpine-devel@lists.alpinelinux.org-61666e3f.rsa.pub Possible public key \.pub$ 4ec6bb168aecd97341754c95b622cba43c45d7f4b9053f749f5c4f6cbf422092/layer.tar
+Dockerfile:
+CMD ["/bin/sh"]
+ENV TZ=Europe/Warsaw
+ENV USER=appuser
+ENV UID=501
+ENV GID=501
+ENV PORT=5000
+ENV ENTDIR=/app
+RUN apk upgrade --no-cache --available  \
+	&& apk add --no-cache tzdata dnsmasq libstdc++ libgcc  \
+	&& ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  \
+	&& echo $TZ > /etc/timezone  \
+	&& addgroup --gid "$GID" "$USER"  \
+	&& adduser --disabled-password --gecos "" --home "$ENTDIR" --ingroup "$USER" --no-create-home --uid "$UID" "$USER"
+COPY file:c07c7fa0057e3b634b0d604ba39581d37def6247064caa52de43b63450b3789f in /run-services.sh
+	run-services.sh
+
+COPY dir:7cd4e2caebc15b4ae57230491f5f875a7b3308e5e5f848b1cf31bf9663972185 in /services
+	services/
+	services/.wh..wh..opq
+	services/01-dnsmasq.sh
+
+COPY dir:ab17f928b32d53cd2346c4faba7ead053986e9d769f267a9527b92ead62a4a3b in /scripts
+	scripts/
+	scripts/.wh..wh..opq
+	scripts/.gitkeep
+
+COPY file:1a041fbc90cd536f4f7c95fec85f755e350b52a6a871be7b33c9ee8e665e09c9 in /etc/dnsmasq.conf
+	etc/
+	etc/dnsmasq.conf
+
+RUN mkdir -p /run/dnsmasq  \
+	&& touch /run/dnsmasq/dnsmasq.pid  \
+	&& chmod +x /*.sh /services/*.sh /scripts/*.sh || exit 0  \
+	&& sync
+ENTRYPOINT ["/run-services.sh"]
+STOPSIGNAL SIGQUIT
+ENV ENTDIR=/usr/share/nginx/html
+WORKDIR /usr/share/nginx/html
+COPY dir:a6449cdc9400a60d39ba9efe627a7eada8d19f85add4046a3e6aab4f6142baba in /services
+	services/
+	services/.gitkeep
+
+COPY dir:ab17f928b32d53cd2346c4faba7ead053986e9d769f267a9527b92ead62a4a3b in /scripts
+	scripts/
+	scripts/.gitkeep
+
+RUN chmod +x /*.sh /services/*.sh /scripts/* || exit 0  \
+	&& sync
+RUN chown -R appuser:appuser /services /scripts
+RUN apk add nginx  \
+	&& sed -i '/user nginx;/d' /etc/nginx/nginx.conf  \
+	&& sed -i 's,/var/run/nginx.pid,/tmp/nginx.pid,' /etc/nginx/nginx.conf  \
+	&& sed -i "/^http {/a \ proxy_temp_path /tmp/proxy_temp;\n client_body_temp_path /tmp/client_temp;\n fastcgi_temp_path /tmp/fastcgi_temp;\n uwsgi_temp_path /tmp/uwsgi_temp;\n scgi_temp_path /tmp/scgi_temp;\n" /etc/nginx/nginx.conf  \
+	&& mkdir -p /var/run/nginx-agent  \
+	&& mkdir -p /var/log/nginx-agent  \
+	&& chown -R appuser:appuser /etc/nginx  \
+	&& chmod -R go+rw /etc/nginx  \
+	&& chown -R appuser:appuser /var/log/nginx  \
+	&& chmod -R go+rw /var/log/nginx  \
+	&& chown -R appuser:appuser /var/run/nginx-agent  \
+	&& chmod -R go+w /var/run/nginx-agent  \
+	&& chown -R appuser:appuser /var/lib/nginx  \
+	&& chown -R appuser:appuser /run/nginx  \
+	&& chown -R appuser:appuser /etc/nginx  \
+	&& chown -R appuser:appuser /etc/resolv.conf  \
+	&& ln -sf /dev/stdout /var/log/nginx-agent/agent.log
+COPY dir:f9a13d00ff3c0ef2d815a35a32e633e70f68fbf452a653a9c2bef2c4c7fe0afb in /etc/nginx/http.d/
+	etc/
+	etc/nginx/
+	etc/nginx/http.d/
+	etc/nginx/http.d/default.conf
+
+ENV ENTPROJ=EZD
+COPY dir:67bd9b5654967cfd69f28104478e33d6682efa00db126e50cc7aa633c3d58a12 in /usr/share/nginx/html
+	usr/
+
+COPY dir:5ac72ec46f5c3fc4736e05c75ef4113d25df94995ceda4762c2525e7b76a1c78 in /scripts
+	scripts/
+	scripts/.gitkeep
+	scripts/app-script.sh
+
+RUN chown "$USER":"$USER" $ENTDIR
+WORKDIR /usr/share/nginx/html
+EXPOSE 8080
+ENTRYPOINT ["/scripts/app-script.sh"]
+CMD ["nginx" "-g" "daemon off;"]
+

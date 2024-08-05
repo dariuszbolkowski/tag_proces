@@ -1,0 +1,329 @@
+Analyzing hub.eadministracja.nask.pl/ezdrp/jobtrigger:19.7.42
+Docker Version: 19.03.6
+GraphDriver: overlay2
+Environment Variables
+|PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+|TZ=Europe/Warsaw
+|USER=appuser
+|UID=501
+|GID=501
+|PORT=5000
+|ENTDIR=/app
+
+Open Ports
+|5000
+
+Image user
+|User is root
+
+Potential secrets:
+|Found match etc/apk/keys/alpine-devel@lists.alpinelinux.org-4a6a0840.rsa.pub Possible public key \.pub$ 4ec6bb168aecd97341754c95b622cba43c45d7f4b9053f749f5c4f6cbf422092/layer.tar
+|Found match etc/apk/keys/alpine-devel@lists.alpinelinux.org-5243ef4b.rsa.pub Possible public key \.pub$ 4ec6bb168aecd97341754c95b622cba43c45d7f4b9053f749f5c4f6cbf422092/layer.tar
+|Found match etc/apk/keys/alpine-devel@lists.alpinelinux.org-5261cecb.rsa.pub Possible public key \.pub$ 4ec6bb168aecd97341754c95b622cba43c45d7f4b9053f749f5c4f6cbf422092/layer.tar
+|Found match etc/apk/keys/alpine-devel@lists.alpinelinux.org-6165ee59.rsa.pub Possible public key \.pub$ 4ec6bb168aecd97341754c95b622cba43c45d7f4b9053f749f5c4f6cbf422092/layer.tar
+|Found match etc/apk/keys/alpine-devel@lists.alpinelinux.org-61666e3f.rsa.pub Possible public key \.pub$ 4ec6bb168aecd97341754c95b622cba43c45d7f4b9053f749f5c4f6cbf422092/layer.tar
+Dockerfile:
+CMD ["/bin/sh"]
+ENV TZ=Europe/Warsaw
+ENV USER=appuser
+ENV UID=501
+ENV GID=501
+ENV PORT=5000
+ENV ENTDIR=/app
+RUN apk upgrade --no-cache --available  \
+	&& apk add --no-cache tzdata dnsmasq libstdc++ libgcc  \
+	&& ln -snf /usr/share/zoneinfo/$TZ /etc/localtime  \
+	&& echo $TZ > /etc/timezone  \
+	&& addgroup --gid "$GID" "$USER"  \
+	&& adduser --disabled-password --gecos "" --home "$ENTDIR" --ingroup "$USER" --no-create-home --uid "$UID" "$USER"
+COPY file:c07c7fa0057e3b634b0d604ba39581d37def6247064caa52de43b63450b3789f in /run-services.sh
+	run-services.sh
+
+COPY dir:7cd4e2caebc15b4ae57230491f5f875a7b3308e5e5f848b1cf31bf9663972185 in /services
+	services/
+	services/.wh..wh..opq
+	services/01-dnsmasq.sh
+
+COPY dir:ab17f928b32d53cd2346c4faba7ead053986e9d769f267a9527b92ead62a4a3b in /scripts
+	scripts/
+	scripts/.wh..wh..opq
+	scripts/.gitkeep
+
+COPY file:1a041fbc90cd536f4f7c95fec85f755e350b52a6a871be7b33c9ee8e665e09c9 in /etc/dnsmasq.conf
+	etc/
+	etc/dnsmasq.conf
+
+RUN mkdir -p /run/dnsmasq  \
+	&& touch /run/dnsmasq/dnsmasq.pid  \
+	&& chmod +x /*.sh /services/*.sh /scripts/*.sh || exit 0  \
+	&& sync
+ENTRYPOINT ["/run-services.sh"]
+STOPSIGNAL SIGQUIT
+ENV ENTDIR=/app
+WORKDIR /app
+COPY dir:a6449cdc9400a60d39ba9efe627a7eada8d19f85add4046a3e6aab4f6142baba in /services
+	services/
+	services/.gitkeep
+
+COPY dir:ab17f928b32d53cd2346c4faba7ead053986e9d769f267a9527b92ead62a4a3b in /scripts
+	scripts/
+	scripts/.gitkeep
+
+RUN chmod +x /*.sh /services/*.sh /scripts/*.sh || exit 0  \
+	&& sync
+RUN apk add --no-cache aspnetcore6-runtime
+COPY dir:df59efeb9ecddcccece7a4801f6fd9b3bea83a7e15368d3b7c9c79f985fa2e9d in /app
+	app/
+	app/Antlr3.Runtime.dll
+	app/Autofac.Extensions.DependencyInjection.dll
+	app/Autofac.dll
+	app/Azure.Core.dll
+	app/Azure.Identity.dll
+	app/Azure.Storage.Blobs.dll
+	app/Azure.Storage.Common.dll
+	app/BouncyCastle.Crypto.dll
+	app/Command/
+	app/Command/.wh..wh..opq
+	app/Command/Administracja/
+	app/Command/Administracja/Common/
+	app/Command/Administracja/Common/Resource.resx
+	app/CommandLine.dll
+	app/Dapper.dll
+	app/DistributedLock.Core.dll
+	app/DistributedLock.Redis.dll
+	app/EZDRP.BaseDto.dll
+	app/EZDRP.BaseDto.pdb
+	app/EZDRP.CacheService.Abstractions.dll
+	app/EZDRP.CacheService.Abstractions.pdb
+	app/EZDRP.CacheService.dll
+	app/EZDRP.CacheService.pdb
+	app/EZDRP.Common.dll
+	app/EZDRP.Common.pdb
+	app/EZDRP.JobScheduler.Abstractions.dll
+	app/EZDRP.JobScheduler.Abstractions.pdb
+	app/EZDRP.JobScheduler.dll
+	app/EZDRP.JobScheduler.pdb
+	app/EZDRP.SharedDto.dll
+	app/EZDRP.SharedDto.pdb
+	app/EZDRP.WyzwalaczZadan.App
+	app/EZDRP.WyzwalaczZadan.App.deps.json
+	app/EZDRP.WyzwalaczZadan.App.dll
+	app/EZDRP.WyzwalaczZadan.App.pdb
+	app/EZDRP.WyzwalaczZadan.App.runtimeconfig.json
+	app/EZDRP.WyzwalaczZadan.Common.dll
+	app/EZDRP.WyzwalaczZadan.Common.pdb
+	app/EZDRP.WyzwalaczZadan.Cron.dll
+	app/EZDRP.WyzwalaczZadan.Cron.pdb
+	app/EasyNetQ.dll
+	app/FastMember.dll
+	app/FluentMigrator.Abstractions.dll
+	app/FluentMigrator.Extensions.Oracle.dll
+	app/FluentMigrator.Extensions.Postgres.dll
+	app/FluentMigrator.Extensions.SqlAnywhere.dll
+	app/FluentMigrator.Extensions.SqlServer.dll
+	app/FluentMigrator.Runner.Core.dll
+	app/FluentMigrator.Runner.Db2.dll
+	app/FluentMigrator.Runner.Firebird.dll
+	app/FluentMigrator.Runner.Hana.dll
+	app/FluentMigrator.Runner.MySql.dll
+	app/FluentMigrator.Runner.Oracle.dll
+	app/FluentMigrator.Runner.Postgres.dll
+	app/FluentMigrator.Runner.Redshift.dll
+	app/FluentMigrator.Runner.SQLite.dll
+	app/FluentMigrator.Runner.SqlAnywhere.dll
+	app/FluentMigrator.Runner.SqlServer.dll
+	app/FluentMigrator.Runner.SqlServerCe.dll
+	app/FluentMigrator.Runner.dll
+	app/FluentMigrator.dll
+	app/FluentNHibernate.dll
+	app/Google.Protobuf.dll
+	app/Grace.DependencyInjection.Extensions.dll
+	app/Grace.dll
+	app/Grpc.Core.Api.dll
+	app/Grpc.Net.Client.dll
+	app/Grpc.Net.Common.dll
+	app/HibernatingRhinos.Profiler.Appender.dll
+	app/Humanizer.dll
+	app/ICE.App.dll
+	app/ICE.AppCommon.dll
+	app/ICE.ConsoleWebServiceApp.dll
+	app/ICE.Core.dll
+	app/ICE.Data.dll
+	app/ICE.DataEf.dll
+	app/ICE.Infrastructure.AspNetCore.dll
+	app/ICE.Infrastructure.dll
+	app/IceTestRole.dll
+	app/Iesi.Collections.dll
+	app/K4os.Compression.LZ4.Streams.dll
+	app/K4os.Compression.LZ4.dll
+	app/K4os.Hash.xxHash.dll
+	app/KellermanSoftware.Compare-NET-Objects.dll
+	app/MessagePack.Annotations.dll
+	app/MessagePack.dll
+	app/Microsoft.AI.DependencyCollector.dll
+	app/Microsoft.AI.EventCounterCollector.dll
+	app/Microsoft.AI.PerfCounterCollector.dll
+	app/Microsoft.AI.ServerTelemetryChannel.dll
+	app/Microsoft.AI.WindowsServer.dll
+	app/Microsoft.ApplicationInsights.AspNetCore.dll
+	app/Microsoft.ApplicationInsights.dll
+	app/Microsoft.Bcl.AsyncInterfaces.dll
+	app/Microsoft.CodeAnalysis.CSharp.dll
+	app/Microsoft.CodeAnalysis.dll
+	app/Microsoft.Data.SqlClient.dll
+	app/Microsoft.Data.Sqlite.dll
+	app/Microsoft.EntityFrameworkCore.Abstractions.dll
+	app/Microsoft.EntityFrameworkCore.Relational.dll
+	app/Microsoft.EntityFrameworkCore.SqlServer.dll
+	app/Microsoft.EntityFrameworkCore.Sqlite.dll
+	app/Microsoft.EntityFrameworkCore.dll
+	app/Microsoft.Extensions.Caching.Abstractions.dll
+	app/Microsoft.Extensions.Caching.Memory.dll
+	app/Microsoft.Extensions.Configuration.Abstractions.dll
+	app/Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+	app/Microsoft.Extensions.Configuration.UserSecrets.dll
+	app/Microsoft.Extensions.Configuration.dll
+	app/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+	app/Microsoft.Extensions.DependencyInjection.dll
+	app/Microsoft.Extensions.DependencyModel.dll
+	app/Microsoft.Extensions.Hosting.dll
+	app/Microsoft.Extensions.Logging.Abstractions.dll
+	app/Microsoft.Extensions.Logging.ApplicationInsights.dll
+	app/Microsoft.Extensions.Logging.dll
+	app/Microsoft.Extensions.Options.dll
+	app/Microsoft.Extensions.PlatformAbstractions.dll
+	app/Microsoft.Extensions.Primitives.dll
+	app/Microsoft.Identity.Client.Extensions.Msal.dll
+	app/Microsoft.Identity.Client.dll
+	app/Microsoft.IdentityModel.Abstractions.dll
+	app/Microsoft.IdentityModel.JsonWebTokens.dll
+	app/Microsoft.IdentityModel.Logging.dll
+	app/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+	app/Microsoft.IdentityModel.Protocols.dll
+	app/Microsoft.IdentityModel.Tokens.dll
+	app/Microsoft.NET.StringTools.dll
+	app/Microsoft.OpenApi.dll
+	app/Microsoft.SqlServer.Server.dll
+	app/Microsoft.Win32.SystemEvents.dll
+	app/MySql.Data.dll
+	app/MySql.EntityFrameworkCore.dll
+	app/MySqlConnector.dll
+	app/NHibernate.Extensions.Logging.dll
+	app/NHibernate.Logging.Serilog.dll
+	app/NHibernate.dll
+	app/NLog.dll
+	app/Newtonsoft.Json.dll
+	app/Nito.AsyncEx.Coordination.dll
+	app/Nito.AsyncEx.Tasks.dll
+	app/Nito.Collections.Deque.dll
+	app/Nito.Disposables.dll
+	app/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+	app/Npgsql.dll
+	app/OpenTelemetry.Api.ProviderBuilderExtensions.dll
+	app/OpenTelemetry.Api.dll
+	app/OpenTelemetry.Exporter.Console.dll
+	app/OpenTelemetry.Exporter.OpenTelemetryProtocol.dll
+	app/OpenTelemetry.Instrumentation.AspNetCore.dll
+	app/OpenTelemetry.Instrumentation.EntityFrameworkCore.dll
+	app/OpenTelemetry.Instrumentation.Http.dll
+	app/OpenTelemetry.dll
+	app/Oracle.EntityFrameworkCore.dll
+	app/Oracle.ManagedDataAccess.dll
+	app/Pipelines.Sockets.Unofficial.dll
+	app/Pomelo.EntityFrameworkCore.MySql.dll
+	app/Quartz.Jobs.dll
+	app/Quartz.Plugins.dll
+	app/Quartz.Serialization.Json.dll
+	app/Quartz.dll
+	app/RabbitMQ.Client.dll
+	app/Remotion.Linq.EagerFetching.dll
+	app/Remotion.Linq.dll
+	app/RestSharp.dll
+	app/SQLite.Interop.dll
+	app/SQLitePCLRaw.batteries_v2.dll
+	app/SQLitePCLRaw.core.dll
+	app/SQLitePCLRaw.provider.e_sqlite3.dll
+	app/Serilog.AspNetCore.dll
+	app/Serilog.Exceptions.dll
+	app/Serilog.Expressions.dll
+	app/Serilog.Extensions.Hosting.dll
+	app/Serilog.Extensions.Logging.dll
+	app/Serilog.Formatting.Compact.dll
+	app/Serilog.Settings.Configuration.dll
+	app/Serilog.Sinks.Async.dll
+	app/Serilog.Sinks.Console.dll
+	app/Serilog.Sinks.Debug.dll
+	app/Serilog.Sinks.File.dll
+	app/Serilog.Sinks.Grafana.Loki.dll
+	app/Serilog.Sinks.PeriodicBatching.dll
+	app/Serilog.Sinks.Seq.dll
+	app/Serilog.dll
+	app/SimpleHashing.Net.dll
+	app/SqlKata.Execution.dll
+	app/SqlKata.dll
+	app/StackExchange.Redis.dll
+	app/System.Collections.Immutable.dll
+	app/System.Configuration.ConfigurationManager.dll
+	app/System.Data.SqlClient.dll
+	app/System.Data.SqlServerCe.dll
+	app/System.Diagnostics.DiagnosticSource.dll
+	app/System.Diagnostics.PerformanceCounter.dll
+	app/System.DirectoryServices.Protocols.dll
+	app/System.DirectoryServices.dll
+	app/System.Drawing.Common.dll
+	app/System.IO.Pipelines.dll
+	app/System.IdentityModel.Tokens.Jwt.dll
+	app/System.Linq.Dynamic.Core.dll
+	app/System.Memory.Data.dll
+	app/System.Runtime.Caching.dll
+	app/System.Security.Cryptography.Pkcs.dll
+	app/System.Security.Cryptography.ProtectedData.dll
+	app/System.Security.Cryptography.Xml.dll
+	app/System.Security.Permissions.dll
+	app/System.Text.Encodings.Web.dll
+	app/System.Text.Json.dll
+	app/System.Threading.Channels.dll
+	app/System.Windows.Extensions.dll
+	app/de-DE/
+	app/de-DE/.wh..wh..opq
+	app/de-DE/FluentMigrator.Abstractions.resources.dll
+	app/ice.setup.json
+	app/ice.version.json
+	app/nunit.framework.dll
+	app/runtimes/
+	app/runtimes/.wh..wh..opq
+	app/runtimes/browser/
+	app/runtimes/browser/lib/
+	app/runtimes/browser/lib/net6.0/
+	app/runtimes/browser/lib/net6.0/System.Text.Encodings.Web.dll
+	app/runtimes/unix/
+	app/runtimes/unix/lib/
+	app/runtimes/unix/lib/net6.0/
+	app/runtimes/unix/lib/net6.0/System.Drawing.Common.dll
+	app/runtimes/win/
+	app/runtimes/win/lib/
+	app/runtimes/win/lib/net6.0/
+	app/runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll
+	app/runtimes/win/lib/net6.0/System.Drawing.Common.dll
+	app/runtimes/win/lib/net6.0/System.Security.Cryptography.ProtectedData.dll
+	app/runtimes/win/lib/net6.0/System.Windows.Extensions.dll
+	app/runtimes/win/lib/netcoreapp2.0/
+	app/runtimes/win/lib/netcoreapp2.0/System.Diagnostics.PerformanceCounter.dll
+	app/web.config
+
+COPY dir:5afc8d575321538e19983ec3d42c8db3262a4a3322a024b90af58a4e094cbe05 in /usr/local/share/ca-certificates/
+	usr/
+	usr/local/
+	usr/local/share/
+	usr/local/share/ca-certificates/
+	usr/local/share/ca-certificates/.wh..wh..opq
+	usr/local/share/ca-certificates/WS-INT-Sign2017.crt
+	usr/local/share/ca-certificates/WS-INT-Sign2017_root.crt
+
+RUN chown "$USER":"$USER" $ENTDIR  \
+	&& apk add --no-cache msttcorefonts-installer freetype openssl ca-certificates  \
+	&& update-ca-certificates
+WORKDIR /app
+EXPOSE 5000
+CMD ["dotnet" "EZDRP.WyzwalaczZadan.App.dll" "--urls=http://*:5000"]
+
